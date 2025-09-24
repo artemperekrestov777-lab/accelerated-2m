@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "Для пуша изменений выполните одну из команд:"
+echo ""
+echo "1. Если у вас есть GitHub токен:"
+echo "   git push https://artemperekrestov777-lab:YOUR_TOKEN@github.com/artemperekrestov777-lab/accelerated-2m.git main"
+echo ""
+echo "2. Или создайте токен на:"
+echo "   https://github.com/settings/tokens/new"
+echo "   - Выберите права: repo"
+echo "   - Скопируйте токен и используйте в команде выше"
+echo ""
+echo "3. Или попробуйте через браузер:"
+echo "   - Откройте: https://github.com/artemperekrestov777-lab/accelerated-2m"
+echo "   - Загрузите файлы вручную через 'Upload files'"

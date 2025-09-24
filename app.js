@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function loadData() {
         try {
-            const response = await fetch('data-2m.json');
+            const response = await fetch('data-2m.json?v=' + Date.now());
             if (!response.ok) throw new Error('Failed to load data');
             data = await response.json();
             renderContent();
