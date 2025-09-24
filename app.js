@@ -311,13 +311,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderNextSteps() {
         if (!data.nextSteps) return;
 
+        const section = document.querySelector('#next-steps .content');
+
+        // Добавляем заголовок секции если есть
+        if (data.nextSteps.title) {
+            const titleEl = document.querySelector('#next-steps h2');
+            if (titleEl) titleEl.textContent = data.nextSteps.title;
+        }
+
+        // Рендерим действия
         const list = document.querySelector('.next-steps-list');
-        list.innerHTML = data.nextSteps.map((step, index) => `
+        const actions = data.nextSteps.actions || data.nextSteps; // Поддержка старого формата
+        list.innerHTML = Array.isArray(actions) ? actions.map((step, index) => `
             <div class="next-step">
                 <div class="next-step-number">${index + 1}</div>
                 <div>${step}</div>
             </div>
-        `).join('');
+        `).join('') : '';
+
+        // Добавляем блок с результатами если есть
+        if (data.nextSteps.results) {
+            const resultsHtml = `
+                <div class="results-section">
+                    <h3 class="results-title">${data.nextSteps.results.title}</h3>
+                    <div class="results-grid">
+                        ${data.nextSteps.results.items.map((result, index) => `
+                            <div class="result-item">
+                                <div class="result-icon">✓</div>
+                                <div class="result-text">${result}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            list.insertAdjacentHTML('afterend', resultsHtml);
+        }
     }
 
     function initScrollAnimations() {
