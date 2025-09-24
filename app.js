@@ -319,17 +319,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (titleEl) titleEl.textContent = data.nextSteps.title;
         }
 
-        // Рендерим действия
+        // Очищаем контейнер
         const list = document.querySelector('.next-steps-list');
-        const actions = data.nextSteps.actions || data.nextSteps; // Поддержка старого формата
-        list.innerHTML = Array.isArray(actions) ? actions.map((step, index) => `
-            <div class="next-step">
-                <div class="next-step-number">${index + 1}</div>
-                <div>${step}</div>
-            </div>
-        `).join('') : '';
+        list.innerHTML = '';
 
-        // Добавляем блок с результатами если есть
+        // Сначала добавляем блок с результатами
         if (data.nextSteps.results) {
             const resultsHtml = `
                 <div class="results-section">
@@ -344,7 +338,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
             `;
-            list.insertAdjacentHTML('afterend', resultsHtml);
+            list.insertAdjacentHTML('beforeend', resultsHtml);
+        }
+
+        // Затем добавляем действия
+        const actions = data.nextSteps.actions || data.nextSteps; // Поддержка старого формата
+        if (Array.isArray(actions)) {
+            const actionsHtml = `
+                <div class="actions-section">
+                    <h3 class="actions-title">План действий:</h3>
+                    ${actions.map((step, index) => `
+                        <div class="next-step">
+                            <div class="next-step-number">${index + 1}</div>
+                            <div>${step}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            list.insertAdjacentHTML('beforeend', actionsHtml);
         }
     }
 
